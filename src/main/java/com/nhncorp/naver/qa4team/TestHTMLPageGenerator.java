@@ -24,14 +24,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class TestHTMLPageGenerator {
-	static public String convertURL(String source){
-		byte[] bytes = source.getBytes();
-		StringBuilder sb = new StringBuilder();
-		for(byte b : bytes){
-			sb.append(String.format("%%%X", b));
-		}
-		return sb.toString();
-	}
+	
 	
 	public void generateTestHTMLPage(String url, String target) {
 		HttpClient client = new HttpClient();
