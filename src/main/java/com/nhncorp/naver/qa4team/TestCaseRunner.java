@@ -1,5 +1,7 @@
 package com.nhncorp.naver.qa4team;
 
+import java.io.File;
+
 /*1. 특정 키워드 검색 결과 화면과 SnapsIE를 임베드 해서 저장*/
 /*2. 원하는 컬렉션 빼고 다 지움*/
 /*3. 캡쳐*/
@@ -19,7 +21,8 @@ public class TestCaseRunner{
 	public void run(TestCase tc){
 		for(String keyword : tc.getKeywords()){
 			new TestHTMLPageGenerator().generateTestHTMLPage(url+convertURL(keyword), htmlDir+html);
-			new PngGenerator().pngGenerate(html, tc.getClassName(), pngDir+tc.getClassName()+".png");
+			String path = new PngGenerator().pngGenerate(html, tc.getClassName(), pngDir+tc.getClassName()+".png");
+			if(!new File(path).isFile()) throw new IllegalStateException("Did not generate PNG file");
 		}
 	}
 }

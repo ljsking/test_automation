@@ -25,7 +25,6 @@ public class IESearchRegressionTest {
 	
 	@Test(dataProvider = "fromExcel")
 	public void mainTest(TestCase tc) throws FileNotFoundException {
-		TestCaseRunner runner = new TestCaseRunner();
-		runner.run(tc);
+		new TestCaseRunner().run(tc);
 	}
 }

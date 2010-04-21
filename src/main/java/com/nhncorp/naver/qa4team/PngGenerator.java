@@ -11,7 +11,7 @@ import com.thoughtworks.selenium.Selenium;
 
 public class PngGenerator{
 	final String orginalPath = "C:\\snapsie_test.png";
-	public void pngGenerate(String htmlName, String collectionName, String target){
+	public String pngGenerate(String htmlName, String collectionName, String target){
 		WebServer webserver = new WebServer();
 		webserver.start();
 		Selenium selenium;
@@ -38,11 +38,11 @@ public class PngGenerator{
 		js ="hideSectionExclude('"+collectionName+"')";
 		executeJS(selenium, js);
 		executeJS(selenium, "save();");
-		selenium.close();
 		sserver.stop();
 		webserver.stop();
 		File f = new File(orginalPath);
 		f.renameTo(new File(target));
+		return target;
 	}
 	private String executeJS(Selenium selenium, String js){
 		return selenium.getEval("with (selenium.browserbot.getCurrentWindow()) {"+js+"}");
