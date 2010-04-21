@@ -1,7 +1,5 @@
 package com.nhncorp.naver.qa4team;
 
-import static de.michaeltamm.fightinglayoutbugs.HamcrestHelper.assertThat;
-
 import java.io.File;
 
 import org.mortbay.jetty.Connector;
@@ -18,8 +16,6 @@ public class WebServer {
     public WebServer() {
         _server = new Server();
         File webappDir = new File("web-inf");
-        File webXml = new File(webappDir, "web.xml");
-        assertThat(webXml.exists());
         WebAppContext webAppContext = new WebAppContext(webappDir.getAbsolutePath(), "/");
         _server.addHandler(webAppContext);
     }

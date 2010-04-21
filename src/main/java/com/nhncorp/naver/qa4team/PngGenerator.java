@@ -38,6 +38,7 @@ public class PngGenerator{
 		js ="hideSectionExclude('"+collectionName+"')";
 		executeJS(selenium, js);
 		executeJS(selenium, "save();");
+		selenium.close();
 		sserver.stop();
 		webserver.stop();
 		File f = new File(orginalPath);
