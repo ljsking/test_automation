@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
-public class HtmlServerTest {
+public class HtmlServerTest extends IESeleniumTestCase {
 	
 	final String target = "C:\\snapsie_test_.png";
 	
@@ -26,7 +26,7 @@ public class HtmlServerTest {
 	@Test
 	public void servingTest() throws Exception{
 		assertFalse((new File(target)).isFile());
-		new PngGenerator().pngGenerate("test.html", "music section", target);
+		new PngGenerator().pngGenerate(selenium, "test.html", "music section", target);
 		assertTrue((new File(target)).isFile());
 	}
 }

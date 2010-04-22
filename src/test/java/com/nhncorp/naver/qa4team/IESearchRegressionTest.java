@@ -10,7 +10,8 @@ import java.util.List;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class IESearchRegressionTest {
+public class IESearchRegressionTest extends IESeleniumTestCase {
+		
 	@DataProvider(name="fromExcel")
 	public Iterator<Object[]> readFromExcel() throws FileNotFoundException{
 		InputStream myxls = new FileInputStream("src/main/resources/TestCase.xlsx");
@@ -25,6 +26,6 @@ public class IESearchRegressionTest {
 	
 	@Test(dataProvider = "fromExcel")
 	public void mainTest(TestCase tc) throws FileNotFoundException {
-		new TestCaseRunner().run(tc);
+		new TestCaseRunner().run(tc, selenium);
 	}
 }
