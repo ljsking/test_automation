@@ -4,27 +4,31 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+
 import com.thoughtworks.selenium.Selenium;
 
 public class PngGenerator{
 	final String orginalPath = "C:\\snapsie_test.png";
-	public String pngGenerate(Selenium selenium, String htmlName, String collectionName, String target){
-		selenium.open("/"+htmlName);
-		String js;
+	public String pngGenerate(WebDriver driver, String url, String collectionName, String target){
+		driver.get(url);
+		/*String js;
 		try {
 			js = FileUtils.readFileToString(new File("src/main/resources/screencapture.js"));
 		} catch (IOException e) {
 			throw new IllegalStateException(e);
 		}
-		executeJS(selenium, js);
+		executeJS(driver, js);
 		js ="hideSectionExclude('"+collectionName+"')";
-		executeJS(selenium, js);
-		executeJS(selenium, "save();");
+		executeJS(driver, js);
+		executeJS(driver, "save();");
 		File f = new File(orginalPath);
-		f.renameTo(new File(target));
+		f.renameTo(new File(target));*/
 		return target;
 	}
-	private String executeJS(Selenium selenium, String js){
-		return selenium.getEval("with (selenium.browserbot.getCurrentWindow()) {"+js+"}");
+	private void executeJS(WebDriver driver, String js){
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		jse.executeScript(js);
 	}
 }
