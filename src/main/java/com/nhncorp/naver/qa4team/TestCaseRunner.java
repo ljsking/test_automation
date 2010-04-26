@@ -1,5 +1,7 @@
 package com.nhncorp.naver.qa4team;
 
+import static org.testng.Assert.*;
+
 import java.io.File;
 import com.thoughtworks.selenium.Selenium;
 
@@ -22,8 +24,14 @@ public class TestCaseRunner{
 	public void run(TestCase tc, Selenium selenium){
 		for(String keyword : tc.getKeywords()){
 			new TestHTMLPageGenerator().generateTestHTMLPage(url+convertURL(keyword), htmlDir+html);
-			String path = new PngGenerator().pngGenerate(selenium, html, tc.getClassName(), pngDir+tc.getClassName()+".png");
+			String path = new PngGenerator().pngGenerate(selenium, html, tc.getClassName(), pngDir+tc.getClassName()+"_"+keyword+".png");
 			if(!new File(path).isFile()) throw new IllegalStateException("Did not generate PNG file");
+			StringBuilder sb = new StringBuilder();
+			sb.append("//div[@id='content']/div[@class='"+tc.getClassName()+"']/h2");
+			sb.append("|//div[@id='content']/div[@class='"+tc.getClassName()+"']/div/div/h2");
+			sb.append("|//div[@id='content']/div[@class='"+tc.getClassName()+"']//div[@id='header']/h3");
+			assertEquals(tc.getHeadTitle(), selenium.getText(sb.toString()));
+			
 		}
 	}
 }
