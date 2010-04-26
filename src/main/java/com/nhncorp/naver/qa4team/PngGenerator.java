@@ -9,7 +9,7 @@ import com.thoughtworks.selenium.Selenium;
 public class PngGenerator{
 	final String orginalPath = "C:\\snapsie_test.png";
 	public String pngGenerate(Selenium selenium, String htmlName, String collectionName, String target){
-		selenium.open("/"+htmlName);
+		selenium.open(htmlName);
 		String js;
 		try {
 			js = FileUtils.readFileToString(new File("src/main/resources/screencapture.js"));
