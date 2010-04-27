@@ -25,7 +25,7 @@ public class HtmlServerTest{
 
 	@AfterClass
 	public void afterClass() {
-		FileUtils.deleteQuietly(new File(target));
+		//FileUtils.deleteQuietly(new File(target));
 	}
 	@Test
 	public void servingTest() throws Exception{

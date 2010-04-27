@@ -7,11 +7,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class IESearchRegressionTest extends IESeleniumTestCase {
-		
+public class IESearchRegressionTest {
+	private WebDriver driver;
+	@BeforeClass
+	public void beforeClass(){
+		driver = new InternetExplorerDriver();
+	}
 	@DataProvider(name="fromExcel")
 	public Iterator<Object[]> readFromExcel() throws FileNotFoundException{
 		InputStream myxls = new FileInputStream("src/main/resources/TestCase.xlsx");
@@ -26,6 +33,6 @@ public class IESearchRegressionTest extends IESeleniumTestCase {
 	
 	@Test(dataProvider = "fromExcel")
 	public void mainTest(TestCase tc) throws FileNotFoundException {
-		new TestCaseRunner().run(tc, selenium);
+		new TestCaseRunner().run(tc, driver);
 	}
 }
