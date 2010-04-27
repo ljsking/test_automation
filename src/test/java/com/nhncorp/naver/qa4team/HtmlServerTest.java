@@ -14,23 +14,33 @@ import org.testng.annotations.Test;
 
 public class HtmlServerTest{
 	
-	final String target = "C:\\snapsie_test_.png";
-	final String url = "http://search.naver.com/search.naver?sm=tab_hty&where=nexearch&query=%C7%C1%B6%F3%C7%CF%C0%C7+%BF%AC%C0%CE&x=0&y=0";
-	WebDriver dirver = new InternetExplorerDriver();
+	final String nanum_target = "C:\\snapsie_test_nanum.png";
+	final String system_target = "C:\\snapsie_test_system.png";
+	final String keyword = "프라하의 연인";
+	WebDriver driver = new InternetExplorerDriver();
 	
 	@BeforeClass
 	public void beforeClass() {
-		FileUtils.deleteQuietly(new File(target));
+		FileUtils.deleteQuietly(new File(nanum_target));
+		FileUtils.deleteQuietly(new File(system_target));
 	}
 
 	@AfterClass
 	public void afterClass() {
 		//FileUtils.deleteQuietly(new File(target));
 	}
-	@Test
-	public void servingTest() throws Exception{
-		assertFalse((new File(target)).isFile());
-		new PngGenerator().pngGenerate(dirver, url, "content_search section", target);
-		assertTrue((new File(target)).isFile());
+	@Test(groups = {"longTest"})
+	public void screencaptureSystemFontTest() throws Exception{
+		NanumSwitch.offNanum(driver);
+		assertFalse((new File(system_target)).isFile());
+		new PngGenerator().pngGenerate(driver, keyword, "content_search section", system_target);
+		assertTrue((new File(system_target)).isFile());
+	}
+	@Test(groups = {"longTest"})
+	public void screencaptureNanumFontTest() throws Exception{
+		NanumSwitch.onNanum(driver);
+		assertFalse((new File(nanum_target)).isFile());
+		new PngGenerator().pngGenerate(driver, keyword, "content_search section", nanum_target);
+		assertTrue((new File(nanum_target)).isFile());
 	}
 }
