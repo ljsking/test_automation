@@ -23,7 +23,7 @@ public class TestCaseRunner{
 	final String url = "http://search.naver.com/search.naver?where=nexearch&query=";
 	public void run(TestCase tc, WebDriver driver){
 		for(String keyword : tc.getKeywords()){
-			String path = new PngGenerator().pngGenerate(driver, keyword, tc.getClassName(), pngDir+tc.getClassName()+"_"+keyword+".png");
+			String path = PngGenerator.generate(driver, keyword, tc.getClassName(), pngDir+tc.getClassName()+"_"+keyword+".png");
 			if(!new File(path).isFile()) throw new IllegalStateException("Did not generate PNG file");
 		}
 	}

@@ -33,14 +33,14 @@ public class HtmlServerTest{
 	public void screencaptureSystemFontTest() throws Exception{
 		NanumSwitch.offNanum(driver);
 		assertFalse((new File(system_target)).isFile());
-		new PngGenerator().pngGenerate(driver, keyword, "content_search section", system_target);
+		PngGenerator.generate(driver, keyword, "content_search section", system_target);
 		assertTrue((new File(system_target)).isFile());
 	}
 	@Test(groups = {"longTest"})
 	public void screencaptureNanumFontTest() throws Exception{
 		NanumSwitch.onNanum(driver);
 		assertFalse((new File(nanum_target)).isFile());
-		new PngGenerator().pngGenerate(driver, keyword, "content_search section", nanum_target);
+		PngGenerator.generate(driver, keyword, "content_search section", nanum_target);
 		assertTrue((new File(nanum_target)).isFile());
 	}
 }

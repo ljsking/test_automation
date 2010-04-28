@@ -10,8 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.TimedOutException;
 
 public class PngGenerator{
-	final String orginalPath = "C:\\snapsie_test.png";
-	public String pngGenerate(WebDriver driver, String keyword, String collectionName, String target){
+	private static final String orginalPath = "C:\\snapsie_test.png";
+	static public String generate(WebDriver driver, String keyword, String collectionName, String target){
 		driver.get("http://naver.com");
 		driver.findElement(By.id("query")).sendKeys(keyword);
 		try{
