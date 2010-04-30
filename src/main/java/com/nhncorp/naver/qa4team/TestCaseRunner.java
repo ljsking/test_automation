@@ -1,9 +1,9 @@
 package com.nhncorp.naver.qa4team;
 
-import static org.testng.Assert.*;
 
 import java.io.File;
-import com.thoughtworks.selenium.Selenium;
+
+import org.openqa.selenium.WebDriver;
 
 /*1. 특정 키워드 검색 결과 화면과 SnapsIE를 임베드 해서 저장*/
 /*2. 원하는 컬렉션 빼고 다 지움*/
@@ -21,17 +21,10 @@ public class TestCaseRunner{
 	final String htmlDir = "web-inf/";
 	final String html = "target.html";
 	final String url = "http://search.naver.com/search.naver?where=nexearch&query=";
-	public void run(TestCase tc, Selenium selenium){
+	public void run(TestCase tc, WebDriver driver){
 		for(String keyword : tc.getKeywords()){
-			new TestHTMLPageGenerator().generateTestHTMLPage(url+convertURL(keyword), htmlDir+html);
-			String path = new PngGenerator().pngGenerate(selenium, html, tc.getClassName(), pngDir+tc.getClassName()+"_"+keyword+".png");
+			String path = PngGenerator.generate(driver, keyword, tc.getClassName(), pngDir+tc.getClassName()+"_"+keyword+".png");
 			if(!new File(path).isFile()) throw new IllegalStateException("Did not generate PNG file");
-			StringBuilder sb = new StringBuilder();
-			sb.append("//div[@id='content']/div[@class='"+tc.getClassName()+"']/h2");
-			sb.append("|//div[@id='content']/div[@class='"+tc.getClassName()+"']/div/div/h2");
-			sb.append("|//div[@id='content']/div[@class='"+tc.getClassName()+"']//div[@id='header']/h3");
-			assertEquals(tc.getHeadTitle(), selenium.getText(sb.toString()));
-			
 		}
 	}
 }
