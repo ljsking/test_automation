@@ -9,9 +9,9 @@ import java.io.StringWriter;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
+
+import com.thoughtworks.selenium.DefaultSelenium;
+import com.thoughtworks.selenium.Selenium;
 
 public class Main {
 	enum Browser{IE, FF}
@@ -22,24 +22,33 @@ public class Main {
 	private List<TestCase> testcases;
 	static private String hideDivJS;
 	static private String captureForIE;
+	private static String getStringFromFile(String file){
+		InputStream in = PngGenerator.class.getClassLoader().getResourceAsStream(file);
+		StringWriter writer = new StringWriter();
+		try {
+			if(in == null){
+				in = new FileInputStream(new File("src/main/resources/"+file));
+			}
+			IOUtils.copy(in, writer);
+			in.close();
+			writer.close();
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		}
+		return writer.toString();
+	}
 	public static String getHideDivJS(){
+		if(hideDivJS == null){
+			hideDivJS = getStringFromFile("hideDiv.js");
+		}
+		System.out.println(hideDivJS);
 		return hideDivJS;
 	}
 	public static String getCaptureForIE(){
+		if(captureForIE == null){
+			captureForIE = getStringFromFile("captureForIE.js");
+		}
 		return captureForIE;
-	}
-	private void readJSFiles() throws IOException{
-		InputStream in = PngGenerator.class.getClassLoader().getResourceAsStream("hideDiv.js");
-		StringWriter writer = new StringWriter();
-		IOUtils.copy(in, writer);
-		hideDivJS = writer.toString();
-		in.close();
-		writer.close();
-		in = PngGenerator.class.getClassLoader().getResourceAsStream("captureForIE.js");
-		writer = new StringWriter();
-		captureForIE = writer.toString();
-		in.close();
-		writer.close();
 	}
 	public Main(String[] args) throws IOException{
 		if(args.length>0){
@@ -63,7 +72,6 @@ public class Main {
 				printUsage("xxxx.jar");
 			}
 		}
-		readJSFiles();
 		testcases = null;
 		try {
 			testcases = new TestCasesFactory().getTestCases(new FileInputStream(excel));
@@ -73,12 +81,13 @@ public class Main {
 	}
 	
 	public void run() {
-		WebDriver driver = browser.equals(Browser.IE)?new InternetExplorerDriver():new FirefoxDriver();
+		String browserStr = browser.equals(Browser.IE)?"*iexplore":"*firefox";
+		Selenium selenium = new DefaultSelenium("localhost", 4444, browserStr, "http://www.naver.com");
 		if(font.equals(Font.System))
-			NanumSwitch.offNanum(driver);
-		else NanumSwitch.onNanum(driver);
+			NanumSwitch.offNanum(selenium);
+		else NanumSwitch.onNanum(selenium);
 		for(TestCase tc:testcases){
-			new TestCaseRunner().run(tc, driver);
+			new TestCaseRunner().run(tc, selenium);
 		}
 	}
 	

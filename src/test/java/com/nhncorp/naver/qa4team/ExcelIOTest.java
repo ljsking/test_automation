@@ -1,6 +1,5 @@
 package com.nhncorp.naver.qa4team;
 
-import static org.junit.Assert.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,7 +9,8 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.junit.Test;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 public class ExcelIOTest {
 	@Test
@@ -27,6 +27,6 @@ public class ExcelIOTest {
 		assertEquals("바로가기", row.getCell(1).getStringCellValue());
 		assertEquals("", row.getCell(2).getStringCellValue());
 		assertEquals("아사히신문", row.getCell(3).getStringCellValue());
-		assertEquals("goto_direct", row.getCell(4).getStringCellValue());
+		assertEquals("goto_direct section", row.getCell(4).getStringCellValue());
 	}
 }
