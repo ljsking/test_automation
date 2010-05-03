@@ -10,7 +10,7 @@ public class SeleniumTestCase {
 	protected Selenium selenium;
 	private SeleniumServer server;
 	@BeforeClass
-	public void beforeClassSel() throws Exception{
+	final public void beforeClassSel() throws Exception{
 		server = new SeleniumServer();
 		server.start();
 		selenium = new DefaultSelenium("localhost", 4444, "*iexplore", "http://www.naver.com");

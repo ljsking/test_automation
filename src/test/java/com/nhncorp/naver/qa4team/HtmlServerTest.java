@@ -38,8 +38,6 @@ public class HtmlServerTest extends SeleniumTestCase{
 		NanumSwitch.onNanum(selenium);
 		assertFalse((new File(nanum_target)).isFile());
 		PngGenerator.generate(selenium, keyword, "content_search section", nanum_target);
-
-		Thread.sleep(10000);
 		assertTrue((new File(nanum_target)).isFile());
 	}
 }

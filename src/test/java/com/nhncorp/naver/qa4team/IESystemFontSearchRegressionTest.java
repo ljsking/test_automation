@@ -7,18 +7,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class IESystemFontSearchRegressionTest {
-	private WebDriver driver;
+public class IESystemFontSearchRegressionTest extends SeleniumTestCase {
 	@BeforeClass
 	public void beforeClass(){
-		driver = new InternetExplorerDriver();
-		NanumSwitch.offNanum(driver);
+		NanumSwitch.offNanum(selenium);
 	}
 	@DataProvider(name="fromExcel")
 	public Iterator<Object[]> readFromExcel() throws FileNotFoundException{
@@ -34,6 +30,6 @@ public class IESystemFontSearchRegressionTest {
 	
 	@Test(dataProvider = "fromExcel", groups = {"longTest"})
 	public void mainTest(TestCase tc) throws FileNotFoundException {
-		new TestCaseRunner().run(tc, driver);
+		new TestCaseRunner().run(tc, selenium);
 	}
 }
