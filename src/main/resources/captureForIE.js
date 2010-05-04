@@ -114,7 +114,6 @@ var Snapsie = new function() {
     init();
 };
 
-function capture() {
-    var outputFile = "C:\\snapsie_test.png";
+function save(outputFile) {
     Snapsie.saveSnapshot(outputFile);
 }

@@ -6,9 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.net.BindException;
+import java.net.ServerSocket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.openqa.selenium.server.RemoteControlConfiguration;
+import org.openqa.selenium.server.SeleniumServer;
 
 import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
@@ -17,11 +23,55 @@ public class Main {
 	enum Browser{IE, FF}
 	enum Font{System, Nanum}
 	static private Browser browser = Browser.IE;
-	private Font font = Font.System;
+	static private Font font = Font.System;
 	private File excel = null;
 	private List<TestCase> testcases;
 	static private String hideDivJS;
 	static private String captureForIE;
+	static private String targetFolder;
+	static private String testURL = "http://search.naver.com/search.naver?where=nexearch&query=";
+	static private int port = -1;
+	
+	private int getSeleniumPort(){
+		if(port == -1){
+			port = (int) (2000+Math.random()*3000);
+			while(isOpenedPort(port)){
+				port = (int) (2000+Math.random()*3000);
+			}
+		}
+		return port;
+	}
+
+	private boolean isOpenedPort(int port){
+		try {
+			ServerSocket socket;
+			socket = new ServerSocket(port);
+			socket.close();
+			return false;
+		} catch (BindException e) {
+			return true;
+		}catch (IOException e) {
+			throw new IllegalStateException(e);
+		}
+	}
+	
+	public static String getTargetFolder(){
+		if(targetFolder == null){
+			SimpleDateFormat format =
+		            new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+			targetFolder = String.format("./%s_%s_%s/", browser, font, format.format(new Date()));
+			File fold = new File(targetFolder);
+			if(!fold.mkdir())
+				throw new IllegalStateException("Directory is not created.");
+			targetFolder = fold.getAbsolutePath()+"\\";
+		}
+		return targetFolder;
+	}
+	
+	public static String getTestURL(){
+		return testURL;
+	}
+	
 	private static String getStringFromFile(String file){
 		InputStream in = PngGenerator.class.getClassLoader().getResourceAsStream(file);
 		StringWriter writer = new StringWriter();
@@ -41,7 +91,6 @@ public class Main {
 		if(hideDivJS == null){
 			hideDivJS = getStringFromFile("hideDiv.js");
 		}
-		System.out.println(hideDivJS);
 		return hideDivJS;
 	}
 	public static String getCaptureForIE(){
@@ -81,13 +130,27 @@ public class Main {
 	}
 	
 	public void run() {
+		SeleniumServer sserver;
+		try {
+			RemoteControlConfiguration conf = new RemoteControlConfiguration();
+			conf.setPort(getSeleniumPort());
+			sserver = new SeleniumServer(conf);
+			sserver.start();
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
 		String browserStr = browser.equals(Browser.IE)?"*iexplore":"*firefox";
-		Selenium selenium = new DefaultSelenium("localhost", 4444, browserStr, "http://www.naver.com");
+		Selenium selenium = new DefaultSelenium("localhost", getSeleniumPort(), browserStr, "http://www.naver.com");
+		selenium.start();
 		if(font.equals(Font.System))
 			NanumSwitch.offNanum(selenium);
 		else NanumSwitch.onNanum(selenium);
 		for(TestCase tc:testcases){
-			new TestCaseRunner().run(tc, selenium);
+			try{
+				new TestCaseRunner().run(tc, selenium);
+			}catch(Throwable t){
+				t.printStackTrace();
+			}
 		}
 	}
 	
@@ -99,7 +162,7 @@ public class Main {
 		System.exit(-1);
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		new Main(args).run();
 	}
 	public static Browser getBrowser() {

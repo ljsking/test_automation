@@ -8,21 +8,9 @@ import com.thoughtworks.selenium.Selenium;
 /*2. 원하는 컬렉션 빼고 다 지움*/
 /*3. 캡쳐*/
 public class TestCaseRunner{
-	static public String convertURL(String source){
-		byte[] bytes = source.getBytes();
-		StringBuilder sb = new StringBuilder();
-		for(byte b : bytes){
-			sb.append(String.format("%%%X", b));
-		}
-		return sb.toString();
-	}
-	final String pngDir = "results/";
-	final String htmlDir = "web-inf/";
-	final String html = "target.html";
-	final String url = "http://search.naver.com/search.naver?where=nexearch&query=";
 	public void run(TestCase tc, Selenium selenium){
 		for(String keyword : tc.getKeywords()){
-			String path = PngGenerator.generate(selenium, keyword, tc.getClassName(), pngDir+tc.getClassName()+"_"+keyword+".png");
+			String path = PngGenerator.generate(selenium, keyword, tc.getClassName(), Main.getTargetFolder()+tc.getClassName()+"_"+keyword+".png");
 			if(!new File(path).isFile()) throw new IllegalStateException("Did not generate PNG file");
 		}
 	}

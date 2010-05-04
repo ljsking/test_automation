@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
-public class HtmlServerTest extends SeleniumTestCase{
+public class GeneratePngFileTest extends SeleniumTestCase{
 	
 	final String nanum_target = "C:\\snapsie_test_nanum.png";
 	final String system_target = "C:\\snapsie_test_system.png";
