@@ -17,6 +17,7 @@ public class HtmlReporter {
 	
 	private void wirte(){
 		try {
+			FileUtils.deleteQuietly(new File(path));
 			FileUtils.writeStringToFile(new File(path), doc.html());
 		} catch (IOException e) {
 			throw new IllegalStateException(e);

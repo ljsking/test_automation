@@ -15,7 +15,7 @@ public class TestCaseRunner{
 				if(!new File(path).isFile()) throw new IllegalStateException("Did not generate PNG file");
 				HtmlReporter.getInstance().pass(keyword, tc.getSection(), path);
 			}catch(Throwable t){
-				HtmlReporter.getInstance().fail(keyword, tc.getSection(), t.getMessage());
+				HtmlReporter.getInstance().fail(keyword, tc.getSection(), t.toString());
 			}
 		}
 	}

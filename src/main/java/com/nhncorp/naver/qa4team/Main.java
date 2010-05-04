@@ -130,6 +130,7 @@ public class Main {
 	}
 	
 	public void run() {
+		HtmlReporter.setPath(getTargetFolder()+"report.html");
 		SeleniumServer sserver;
 		try {
 			RemoteControlConfiguration conf = new RemoteControlConfiguration();
