@@ -20,8 +20,9 @@ public class HtmlReporterTest {
 		FileUtils.deleteQuietly(new File(path));
 	}
 	@Test
-	public void test(){
-		new HtmlReporter(path);
+	public void passTest(){
+		HtmlReporter.setPath(path);
+		HtmlReporter.getInstance().pass("안녕", "요기", "there.png");
 		assertTrue(new File(path).exists());
 	}
 }

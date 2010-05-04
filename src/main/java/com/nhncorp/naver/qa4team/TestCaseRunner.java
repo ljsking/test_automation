@@ -10,8 +10,13 @@ import com.thoughtworks.selenium.Selenium;
 public class TestCaseRunner{
 	public void run(TestCase tc, Selenium selenium){
 		for(String keyword : tc.getKeywords()){
-			String path = PngGenerator.generate(selenium, keyword, tc.getClassName(), Main.getTargetFolder()+tc.getClassName()+"_"+keyword+".png");
-			if(!new File(path).isFile()) throw new IllegalStateException("Did not generate PNG file");
+			try{
+				String path = PngGenerator.generate(selenium, keyword, tc.getClassName(), Main.getTargetFolder()+tc.getClassName()+"_"+keyword+".png");
+				if(!new File(path).isFile()) throw new IllegalStateException("Did not generate PNG file");
+				HtmlReporter.getInstance().pass(keyword, tc.getSection(), path);
+			}catch(Throwable t){
+				HtmlReporter.getInstance().fail(keyword, tc.getSection(), t.getMessage());
+			}
 		}
 	}
 }

@@ -146,11 +146,7 @@ public class Main {
 			NanumSwitch.offNanum(selenium);
 		else NanumSwitch.onNanum(selenium);
 		for(TestCase tc:testcases){
-			try{
-				new TestCaseRunner().run(tc, selenium);
-			}catch(Throwable t){
-				t.printStackTrace();
-			}
+			new TestCaseRunner().run(tc, selenium);
 		}
 	}
 	
