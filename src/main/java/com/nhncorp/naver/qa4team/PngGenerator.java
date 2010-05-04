@@ -8,13 +8,18 @@ public class PngGenerator{
 		selenium.open(Main.getTestURL());
 		selenium.type("query", keyword);
 		selenium.click("//input[@alt='검색']");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		selenium.runScript(Main.getHideDivJS());
 		selenium.runScript("hideSectionExclude('"+collectionName+"');");
 		if(Main.getBrowser().equals(Browser.IE)){
 			selenium.runScript(Main.getCaptureForIE());
 			selenium.runScript("save('"+target.replace("\\","\\\\")+"');");
 		}else{
-			selenium.captureEntirePageScreenshot(target, null);
+			selenium.captureEntirePageScreenshot(target, "");
 		}
 		return target;
 	}

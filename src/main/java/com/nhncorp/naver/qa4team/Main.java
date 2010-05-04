@@ -41,7 +41,11 @@ public class Main {
 		}
 		return port;
 	}
-
+	
+	public static String getBrowserString(){
+		return browser.equals(Browser.IE)?"*iexplore":"*firefox";
+	}
+	
 	private boolean isOpenedPort(int port){
 		try {
 			ServerSocket socket;
@@ -140,7 +144,7 @@ public class Main {
 		} catch (Exception e) {
 			throw new IllegalStateException(e);
 		}
-		String browserStr = browser.equals(Browser.IE)?"*iexplore":"*firefox";
+		String browserStr = getBrowserString();
 		Selenium selenium = new DefaultSelenium("localhost", getSeleniumPort(), browserStr, "http://www.naver.com");
 		selenium.start();
 		if(font.equals(Font.System))
@@ -164,6 +168,10 @@ public class Main {
 	}
 	public static Browser getBrowser() {
 		return browser;
+	}
+
+	public static void setBrowser(Browser br) {
+		Main.browser = br;
 	}
 	
 }

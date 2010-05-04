@@ -11,9 +11,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.nhncorp.naver.qa4team.Main.Browser;
+
 public class IESystemFontSearchRegressionTest extends SeleniumTestCase {
+	
 	@BeforeClass
-	public void beforeClass(){
+	public void beforeClassSel() throws Exception{
+		Main.setBrowser(Browser.FF);
+		super.beforeClassSel();
 		NanumSwitch.offNanum(selenium);
 	}
 	@DataProvider(name="fromExcel")
