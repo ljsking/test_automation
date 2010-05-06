@@ -12,6 +12,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.server.RemoteControlConfiguration;
 import org.openqa.selenium.server.SeleniumServer;
@@ -24,13 +32,13 @@ public class Main {
 	enum Font{System, Nanum}
 	static private Browser browser = Browser.IE;
 	static private Font font = Font.System;
-	private File excel = null;
 	private List<TestCase> testcases;
 	static private String hideDivJS;
 	static private String captureForIE;
 	static private String targetFolder;
 	static private String testURL = "http://search.naver.com/search.naver?where=nexearch&query=";
 	static private int port = -1;
+	private InputStream fis;
 	
 	private int getSeleniumPort(){
 		if(port == -1){
@@ -77,7 +85,7 @@ public class Main {
 	}
 	
 	private static String getStringFromFile(String file){
-		InputStream in = PngGenerator.class.getClassLoader().getResourceAsStream(file);
+		InputStream in = ScreenCapturer.class.getClassLoader().getResourceAsStream(file);
 		StringWriter writer = new StringWriter();
 		try {
 			if(in == null){
@@ -103,34 +111,76 @@ public class Main {
 		}
 		return captureForIE;
 	}
-	public Main(String[] args) throws IOException{
-		if(args.length>0){
-			excel = new File(args[0]);
-		}else{
-			printUsage("xxxx.jar");
-		}
-		if(args.length>1){
-			String browserArg = args[1];
-			try{
-				browser = Browser.valueOf(browserArg);
-			} catch(IllegalArgumentException e) {
-				printUsage("xxxx.jar");
-			}
-		}
-		if(args.length>2){
-			String fontArg = args[2];
-			try{
-				font = Font.valueOf(fontArg);
-			} catch(IllegalArgumentException e) {
-				printUsage("xxxx.jar");
-			}
-		}
-		testcases = null;
+	
+	@SuppressWarnings("static-access")
+	private boolean parsingArguments(String[] args){
+		Options options = new Options();
+		Option browser = OptionBuilder.withArgName("browserType")
+									.hasArg()
+									.withDescription("the browser which it to test(IE or FF)")
+									.create("br");
+		Option font = OptionBuilder.withArgName("fontType")
+									.hasArg()
+									.withDescription("the font which it to apply(System or Nanum)")
+									.create("ft");
+		Option excel = OptionBuilder.withArgName("excelFile")
+									.hasArg()
+									.withDescription("the excel file which it to use(TestCase.xlsx)")
+									.create("xlsx");
+		Option url = OptionBuilder.withArgName("url")
+									.hasArg()
+									.withDescription("the url address which it to test(http://search.naver.com/search.naver?where=nexearch&query=)")
+									.create("url");
+		Option help = OptionBuilder.withDescription("printing help")
+									.create("h");
+		options.addOption(browser);
+		options.addOption(font);
+		options.addOption(excel);
+		options.addOption(url);
+		options.addOption(help);
+		CommandLineParser parser = new GnuParser();
+		HelpFormatter formatter = new HelpFormatter();
 		try {
-			testcases = new TestCasesFactory().getTestCases(new FileInputStream(excel));
-		} catch (FileNotFoundException e) {
-			throw new IllegalStateException(e);
-		}
+	        CommandLine line = parser.parse( options, args );
+	        if(line.hasOption("h")){
+	        	formatter.printHelp( "xxx.jar", options );
+	        	return false;
+	        }
+	        if( line.hasOption( "br" ) ) {
+	        	Main.browser = Browser.valueOf(line.getOptionValue( "br" ));
+		    }
+	        if( line.hasOption( "ft" ) ) {
+	        	Main.font = Font.valueOf(line.getOptionValue( "ft" ));
+		    }
+	        if( line.hasOption( "xlsx" ) ) {
+	        	fis = new FileInputStream(new File(line.getOptionValue( "xlsx" )));
+		    } else {
+		    	fis = this.getClass().getClassLoader().getResourceAsStream("TestCase.xlsx");
+		    }
+	        if( line.hasOption( "url" ) ) {
+	        	testURL = line.getOptionValue( "url" );
+		    }
+		} catch( IllegalArgumentException argE ) {
+			System.err.println( "Parsing failed.  Reason: " + argE.getMessage() );
+			formatter.printHelp( "xxx.jar", options );
+	        return false;
+	    } catch( ParseException exp ) {
+	        System.err.println( "Parsing failed.  Reason: " + exp.getMessage() );
+			formatter.printHelp( "xxx.jar", options );
+	        return false;
+	    } catch (FileNotFoundException e) {
+	    	System.err.println( "Opening an exel file failed.  Reason: " + e.getMessage() );
+			formatter.printHelp( "xxx.jar", options );
+	    	return false;
+	    }
+	    return true;
+	}
+	
+	
+	public Main(String[] args) throws IOException{
+		if(!parsingArguments(args))
+			System.exit(-1);
+		testcases = new TestCasesFactory().getTestCases(fis);
 	}
 	
 	public void run() {
@@ -153,14 +203,6 @@ public class Main {
 		for(TestCase tc:testcases){
 			new TestCaseRunner().run(tc, selenium);
 		}
-	}
-	
-	private void printUsage(String jarFileName){
-		System.out.println(String.format("java -jar %s tc.xslx [browsertype [font]]", jarFileName));
-		System.out.println(String.format("\t default: IE System"));
-		System.out.println(String.format("\t browsertype: IE, FF"));
-		System.out.println(String.format("\t fonttype: System, Nanum"));
-		System.exit(-1);
 	}
 	
 	public static void main(String[] args) throws Exception {

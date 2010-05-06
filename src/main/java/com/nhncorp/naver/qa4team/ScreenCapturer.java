@@ -3,7 +3,7 @@ package com.nhncorp.naver.qa4team;
 import com.nhncorp.naver.qa4team.Main.Browser;
 import com.thoughtworks.selenium.Selenium;
 
-public class PngGenerator{
+public class ScreenCapturer{
 	static public String generate(Selenium selenium, String keyword, String collectionName, String target){
 		selenium.open(Main.getTestURL());
 		selenium.type("query", keyword);

@@ -31,7 +31,7 @@ public class TakeScreencapture {
 	}
 	
 	private String getJS(){
-		InputStream in = PngGenerator.class.getClassLoader().getResourceAsStream("screencapture.js");
+		InputStream in = ScreenCapturer.class.getClassLoader().getResourceAsStream("screencapture.js");
 		StringWriter writer = new StringWriter();
 		try {
 			IOUtils.copy(in, writer);
