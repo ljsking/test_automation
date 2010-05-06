@@ -13,6 +13,7 @@ public class HtmlReporter {
 	private static String path;
 	private static final HtmlReporter INSTANCE = new HtmlReporter();
 	private HtmlReporter(){
+		doc.appendChild(doc.createElement("style").attr("type","text/css").text(".fail{background-color:#FFC0CB;}"));
 	}
 	
 	private void wirte(){

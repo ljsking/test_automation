@@ -13,6 +13,8 @@ public class PngGenerator{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		if(!selenium.isElementPresent("//div[@id='content']/div[@class='"+collectionName+"']"))
+			throw new IllegalStateException("해당 영역이 존재하지 않습니다.");
 		selenium.runScript(Main.getHideDivJS());
 		selenium.runScript("hideSectionExclude('"+collectionName+"');");
 		if(Main.getBrowser().equals(Browser.IE)){
