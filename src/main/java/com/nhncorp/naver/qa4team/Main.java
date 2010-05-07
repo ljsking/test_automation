@@ -20,7 +20,7 @@ import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
 
 public class Main {
-	enum Browser{IE, FF}
+	public enum Browser{IE, FF}
 	enum Font{System, Nanum}
 	static private Browser browser = Browser.IE;
 	static private Font font = Font.System;
