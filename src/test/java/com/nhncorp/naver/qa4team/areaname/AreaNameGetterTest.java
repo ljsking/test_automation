@@ -5,15 +5,15 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
-import com.nhncorp.naver.qa4team.Main;
 import com.nhncorp.naver.qa4team.SeleniumTestCase;
-import com.nhncorp.naver.qa4team.Main.Browser;
+import com.nhncorp.naver.qa4team.regression_test.RegressionTest;
+import com.nhncorp.naver.qa4team.regression_test.RegressionTest.Browser;
 
 public class AreaNameGetterTest extends SeleniumTestCase {
 	String url = "http://search.naver.com/search.naver?where=nexearch&query=%C0%FC%BF%EC%B6%F7&sm=top_lve";
 	@BeforeClass
 	public void beforeClassSel() throws Exception{
-		Main.setBrowser(Browser.FF);
+		RegressionTest.setBrowser(Browser.FF);
 		super.beforeClassSel();
 	}
 	@Test

@@ -1,12 +1,11 @@
 package com.nhncorp.naver.qa4team.regression_test;
 
-import com.nhncorp.naver.qa4team.Main;
-import com.nhncorp.naver.qa4team.Main.Browser;
+import com.nhncorp.naver.qa4team.regression_test.RegressionTest.Browser;
 import com.thoughtworks.selenium.Selenium;
 
 public class ScreenCapturer{
 	static public String generate(Selenium selenium, String keyword, String collectionName, String target){
-		selenium.open(Main.getTestURL());
+		selenium.open(RegressionTest.getTestURL());
 		selenium.type("query", keyword);
 		selenium.click("//input[@alt='검색']");
 		try {
@@ -16,10 +15,10 @@ public class ScreenCapturer{
 		}
 		if(!selenium.isElementPresent("//div[@id='content']/div[@class='"+collectionName+"']"))
 			throw new IllegalStateException("해당 영역이 존재하지 않습니다.");
-		selenium.runScript(Main.getHideDivJS());
+		selenium.runScript(RegressionTest.getHideDivJS());
 		selenium.runScript("hideSectionExclude('"+collectionName+"');");
-		if(Main.getBrowser().equals(Browser.IE)){
-			selenium.runScript(Main.getCaptureForIE());
+		if(RegressionTest.getBrowser().equals(Browser.IE)){
+			selenium.runScript(RegressionTest.getCaptureForIE());
 			selenium.runScript("save('"+target.replace("\\","\\\\")+"');");
 		}else{
 			selenium.captureEntirePageScreenshot(target, "");

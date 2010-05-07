@@ -3,7 +3,7 @@ package com.nhncorp.naver.qa4team.areaname;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.nhncorp.naver.qa4team.Main;
+import com.nhncorp.naver.qa4team.regression_test.RegressionTest;
 import com.thoughtworks.selenium.Selenium;
 
 public class AreaNameGetter{
@@ -32,7 +32,7 @@ public class AreaNameGetter{
 	}
 	public String getAreaName(Selenium selenium, String target){
 		selenium.open(getURL());
-		selenium.runScript(Main.getStringFromFile("areaName.js"));
+		selenium.runScript(RegressionTest.getStringFromFile("areaName.js"));
 		selenium.runScript("initializeCookie();");
 		selenium.runScript("overrideGoCR();overrideTCR();");
 		selenium.click(target);

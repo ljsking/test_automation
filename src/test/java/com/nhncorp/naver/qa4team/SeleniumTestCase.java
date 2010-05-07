@@ -3,6 +3,7 @@ package com.nhncorp.naver.qa4team;
 import org.openqa.selenium.server.SeleniumServer;
 import org.testng.annotations.BeforeClass;
 
+import com.nhncorp.naver.qa4team.regression_test.RegressionTest;
 import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
 
@@ -14,7 +15,7 @@ public class SeleniumTestCase {
 		HtmlReporter.setPath("report.html");
 		server = new SeleniumServer();
 		server.start();
-		selenium = new DefaultSelenium("localhost", 4444, Main.getBrowserString(), "http://www.naver.com");
+		selenium = new DefaultSelenium("localhost", 4444, RegressionTest.getBrowserString(), "http://www.naver.com");
 		selenium.start();
 	}
 }
