@@ -15,7 +15,7 @@ public class AreaTestCasesFactory {
 	private final int TCNUM_COL_NUM = 0;
 	private final int XPATH_COL_NUM = 1;
 	private final int EXPECTEDVALUE_COL_NUM = 2;
-	private final int START_ROW_NUMBER = 2;
+	private final int START_ROW_NUMBER = 1;
 	
 	
 	private AreaTestCase getAreaTestCase(XSSFRow row){
