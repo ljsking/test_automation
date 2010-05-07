@@ -76,7 +76,7 @@ public class Main {
 		return testURL;
 	}
 	
-	private static String getStringFromFile(String file){
+	public static String getStringFromFile(String file){
 		InputStream in = PngGenerator.class.getClassLoader().getResourceAsStream(file);
 		StringWriter writer = new StringWriter();
 		try {
