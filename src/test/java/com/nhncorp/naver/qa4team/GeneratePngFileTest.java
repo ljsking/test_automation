@@ -30,14 +30,14 @@ public class GeneratePngFileTest extends SeleniumTestCase{
 	public void screencaptureSystemFontTest() throws Exception{
 		NanumSwitch.offNanum(selenium);
 		assertFalse((new File(system_target)).isFile());
-		PngGenerator.generate(selenium, keyword, "content_search section", system_target);
+		ScreenCapturer.generate(selenium, keyword, "content_search section", system_target);
 		assertTrue((new File(system_target)).isFile());
 	}
 	@Test(groups = {"longTest"})
 	public void screencaptureNanumFontTest() throws Exception{
 		NanumSwitch.onNanum(selenium);
 		assertFalse((new File(nanum_target)).isFile());
-		PngGenerator.generate(selenium, keyword, "content_search section", nanum_target);
+		ScreenCapturer.generate(selenium, keyword, "content_search section", nanum_target);
 		assertTrue((new File(nanum_target)).isFile());
 	}
 }
