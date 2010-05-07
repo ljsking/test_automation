@@ -24,6 +24,11 @@ import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.server.RemoteControlConfiguration;
 import org.openqa.selenium.server.SeleniumServer;
 
+import com.nhncorp.naver.qa4team.regression_test.NanumSwitch;
+import com.nhncorp.naver.qa4team.regression_test.ScreenCapturer;
+import com.nhncorp.naver.qa4team.regression_test.TestCase;
+import com.nhncorp.naver.qa4team.regression_test.TestCaseRunner;
+import com.nhncorp.naver.qa4team.regression_test.TestCasesFactory;
 import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
 

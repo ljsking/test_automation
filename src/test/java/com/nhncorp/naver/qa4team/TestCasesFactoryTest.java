@@ -10,6 +10,9 @@ import java.util.List;
 
 import org.testng.annotations.Test;
 
+import com.nhncorp.naver.qa4team.regression_test.TestCase;
+import com.nhncorp.naver.qa4team.regression_test.TestCasesFactory;
+
 public class TestCasesFactoryTest {
 	@Test
 	public void testGetTestCases() throws IOException{

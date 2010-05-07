@@ -1,7 +1,9 @@
-package com.nhncorp.naver.qa4team;
+package com.nhncorp.naver.qa4team.regression_test;
 
 import java.io.File;
 
+import com.nhncorp.naver.qa4team.HtmlReporter;
+import com.nhncorp.naver.qa4team.Main;
 import com.thoughtworks.selenium.Selenium;
 
 /*1. 특정 키워드 검색 결과 화면과 SnapsIE를 임베드 해서 저장*/

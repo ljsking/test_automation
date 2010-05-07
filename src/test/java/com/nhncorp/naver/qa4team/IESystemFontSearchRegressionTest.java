@@ -12,6 +12,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.nhncorp.naver.qa4team.Main.Browser;
+import com.nhncorp.naver.qa4team.regression_test.NanumSwitch;
+import com.nhncorp.naver.qa4team.regression_test.TestCase;
+import com.nhncorp.naver.qa4team.regression_test.TestCaseRunner;
+import com.nhncorp.naver.qa4team.regression_test.TestCasesFactory;
 
 public class IESystemFontSearchRegressionTest extends SeleniumTestCase {
 	

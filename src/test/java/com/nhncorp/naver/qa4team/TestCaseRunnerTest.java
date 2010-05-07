@@ -2,6 +2,9 @@ package com.nhncorp.naver.qa4team;
 
 import org.testng.annotations.Test;
 
+import com.nhncorp.naver.qa4team.regression_test.TestCase;
+import com.nhncorp.naver.qa4team.regression_test.TestCaseRunner;
+
 public class TestCaseRunnerTest extends SeleniumTestCase {
 	@Test(groups = {"longTest"})
 	public void integrationTest(){

@@ -9,6 +9,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.nhncorp.naver.qa4team.regression_test.NanumSwitch;
+import com.nhncorp.naver.qa4team.regression_test.ScreenCapturer;
+
 
 public class GeneratePngFileTest extends SeleniumTestCase{
 	

@@ -11,6 +11,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.nhncorp.naver.qa4team.regression_test.NanumSwitch;
+import com.nhncorp.naver.qa4team.regression_test.TestCase;
+import com.nhncorp.naver.qa4team.regression_test.TestCaseRunner;
+import com.nhncorp.naver.qa4team.regression_test.TestCasesFactory;
+
 public class IENanumFontSearchRegressionTest extends SeleniumTestCase{
 	@BeforeClass
 	public void beforeClass(){

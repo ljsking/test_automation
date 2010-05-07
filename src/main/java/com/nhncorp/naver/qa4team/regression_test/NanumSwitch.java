@@ -1,4 +1,4 @@
-package com.nhncorp.naver.qa4team;
+package com.nhncorp.naver.qa4team.regression_test;
 
 import com.thoughtworks.selenium.Selenium;
 
