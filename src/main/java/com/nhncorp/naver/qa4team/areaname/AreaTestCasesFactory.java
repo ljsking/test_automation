@@ -13,7 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class AreaTestCasesFactory {
 	private String preXpath;
 	private String preExpectedValue;
-	private final String SHEET_NAME = "블로그0305";
+	private final String SHEET_NAME = "블로그";
 	private final int TCNUM_COL_NUM = 0;
 	private final int XPATH_COL_NUM = 1;
 	private final int AREANAME_COL_NUM = 2;

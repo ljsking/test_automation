@@ -28,7 +28,7 @@ import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
 
 public class Main {
-	enum Browser{IE, FF}
+	public enum Browser{IE, FF}
 	enum Font{System, Nanum}
 	static private Browser browser = Browser.IE;
 	static private Font font = Font.System;
@@ -84,7 +84,7 @@ public class Main {
 		return testURL;
 	}
 	
-	private static String getStringFromFile(String file){
+	public static String getStringFromFile(String file){
 		InputStream in = ScreenCapturer.class.getClassLoader().getResourceAsStream(file);
 		StringWriter writer = new StringWriter();
 		try {
