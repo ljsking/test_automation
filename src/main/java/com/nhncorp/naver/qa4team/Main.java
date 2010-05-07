@@ -186,6 +186,7 @@ public class Main {
 		if(!parsingArguments(args))
 			System.exit(-1);
 		testcases = new TestCasesFactory().getTestCases(fis);
+		HtmlReporter.getInstance().setTotalTCSize(testcases.size());
 	}
 	
 	public void run() {

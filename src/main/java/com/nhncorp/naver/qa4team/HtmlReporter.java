@@ -10,6 +10,7 @@ import org.jsoup.nodes.*;
 
 public class HtmlReporter {
 	private Document doc = Jsoup.parse("");
+	private Element body;
 	private static String path;
 	private static final HtmlReporter INSTANCE = new HtmlReporter();
 	private int totalTCSize = 0;
@@ -20,8 +21,15 @@ public class HtmlReporter {
 		totalTCSize = size;		
 	}
 	
+	private String getInfoText(){
+		return String.format("Progress %d/%d Pass:%d Fail:%d", passed+failed, totalTCSize, passed, failed);
+	}
+	
 	private HtmlReporter(){
 		doc.appendChild(doc.createElement("style").attr("type","text/css").text(".fail{background-color:#FFC0CB;}"));
+		body = doc.getElementsByTag("body").get(0);
+		body.appendChild(doc.createElement("h1").attr("id","info").text(getInfoText()));
+		
 	}
 	
 	private void wirte(){
@@ -34,22 +42,26 @@ public class HtmlReporter {
 	}
 
 	public void pass(String keyword, String sectionName, String filename) {
+		++passed;
 		Element div = doc.createElement("div");
 		div.attr("class", "pass");
-		doc.appendChild(div);
+		body.appendChild(div);
 		div.appendChild(doc.createElement("h2").text(String.format("%s(%s)", sectionName, keyword)));
 		div.appendChild(doc.createElement("h3").text(new Date().toString()));
 		div.appendChild(doc.createElement("img").attr("src", filename).attr("alt", "screenshot"));
+		doc.getElementById("info").text(getInfoText());
 		wirte();
 	}
 	
 	public void fail(String keyword, String sectionName, String reason) {
+		++failed;
 		Element div = doc.createElement("div");
 		div.attr("class", "fail");
-		doc.appendChild(div);
+		body.appendChild(div);
 		div.appendChild(doc.createElement("h2").text(String.format("%s(%s)", sectionName, keyword)));
 		div.appendChild(doc.createElement("h3").text(new Date().toString()));
 		div.appendChild(doc.createElement("p").text(reason));
+		doc.getElementById("info").text(getInfoText());
 		wirte();
 	}
 
