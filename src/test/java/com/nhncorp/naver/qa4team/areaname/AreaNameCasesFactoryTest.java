@@ -15,7 +15,6 @@ public class AreaNameCasesFactoryTest {
 		InputStream myxls = new FileInputStream("src/main/resources/areaNameTestCase.xlsx");
 		AreaTestCasesFactory factory = new AreaTestCasesFactory();
 		List<AreaTestCase> testCases = factory.getTestCases(myxls);
-		//logger.debug(testCases);
 		assertEquals(testCases.size(), 4);
 		int tcNum = 1;
 		for(AreaTestCase tc:testCases){
@@ -24,14 +23,7 @@ public class AreaNameCasesFactoryTest {
 			assertFalse(tc.getExpectedValue().equals(""));
 			++tcNum;
 		}
-	/*	assertEquals(Arrays.asList(new String[]{"꽃배달"}), testCases.get(20).getKeywords());
-		assertEquals(Arrays.asList(new String[]{"꽃배달"}), testCases.get(21).getKeywords());
-		assertEquals(Arrays.asList(new String[]{"꽃배달"}), testCases.get(22).getKeywords());
-		assertEquals(Arrays.asList(new String[]{"꽃배달"}), testCases.get(23).getKeywords());
-		assertEquals("광고", testCases.get(20).getSection());
-		assertEquals("광고", testCases.get(21).getSection());
-		assertEquals("광고", testCases.get(22).getSection());
-		assertEquals("광고", testCases.get(23).getSection());
-		assertEquals(Arrays.asList(new String[]{"티뷰론","SM5"}), testCases.get(28).getKeywords());*/
+		assertEquals(testCases.get(0).getXpath(), "//form[@id='blog_option_sort_form']//button[span='정확도']");
+		assertEquals(testCases.get(1).getExpectedValue(), "opt.sortdate");
 	}
 }
