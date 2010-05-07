@@ -9,7 +9,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 
 public class HtmlReporter {
-	private Document doc = Jsoup.parse("");
+	private Document doc;
 	private Element body;
 	private static String path;
 	private static final HtmlReporter INSTANCE = new HtmlReporter();
@@ -26,9 +26,24 @@ public class HtmlReporter {
 	}
 	
 	private HtmlReporter(){
-		doc.appendChild(doc.createElement("style").attr("type","text/css").text(".fail{background-color:#FFC0CB;}"));
+		doc = Jsoup.parse("<html><head></head><body></body></html>");
+		Element head = doc.getElementsByTag("head").get(0);
+		head.html("<title>통검통합TC 레포트</title>");
+		head.appendChild(doc.createElement("style").attr("type","text/css").text(".fail{background-color:#FFC0CB;}"));
+		head.appendChild(doc.createElement("script").attr("type","text/javascript").attr("src","http://code.jquery.com/jquery-1.4.2.min.js"));
+		String js = "$(document).ready(function(){" +
+				        "$.each($('div.fail'), function(index, fail){" +
+				            "$('body')[0].insertBefore(fail, $('div.pass')[0]);" +
+				        "});" +
+				    "});";
+		head.appendChild(doc.createElement("script").attr("type","text/javascript").text(js));
+		
 		body = doc.getElementsByTag("body").get(0);
 		body.appendChild(doc.createElement("h1").attr("id","info").text(getInfoText()));
+		
+		//"$('body').insertBefore($('div.fail'), $('h1#info'));";
+		
+		
 		
 	}
 	
