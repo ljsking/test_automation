@@ -12,6 +12,14 @@ public class HtmlReporter {
 	private Document doc = Jsoup.parse("");
 	private static String path;
 	private static final HtmlReporter INSTANCE = new HtmlReporter();
+	private int totalTCSize = 0;
+	private int passed = 0;
+	private int failed = 0;
+	
+	public void setTotalTCSize(int size){
+		totalTCSize = size;		
+	}
+	
 	private HtmlReporter(){
 		doc.appendChild(doc.createElement("style").attr("type","text/css").text(".fail{background-color:#FFC0CB;}"));
 	}
