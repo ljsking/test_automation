@@ -25,6 +25,7 @@ public class AreaTestCasesFactory {
 		boolean result = false;
 		return new AreaTestCase(tcNumber, xpath, expectedValue, result);
 	}
+	
 	public List<AreaTestCase> getTestCases(InputStream is){
 		List<AreaTestCase> areaTestCases = new ArrayList<AreaTestCase>();
 		XSSFWorkbook wb;

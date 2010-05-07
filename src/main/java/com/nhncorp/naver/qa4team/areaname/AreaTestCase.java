@@ -14,7 +14,7 @@ public class AreaTestCase{
 	}
 	
 	public String toString(){
-		return String.format("%d[%s-%s %s{%s}]", tcNumber,xpath, expectedValue, result);
+		return String.format("%d[%s %s{%s}]", tcNumber, xpath, expectedValue, result);
 	}
 
 	public int getTcNumber() {
