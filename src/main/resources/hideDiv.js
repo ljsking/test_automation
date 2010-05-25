@@ -8,6 +8,6 @@ function hideSectionExclude (className){
 	$A($$('div#content>div')).map(function(v){
 		e = $Element(v);
 		if(!e.hasClass(className))
-		e.hide();
+			e.hide();
 	});
 };

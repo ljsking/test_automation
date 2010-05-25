@@ -31,7 +31,7 @@ import com.thoughtworks.selenium.Selenium;
 
 public class RegressionTest implements AutomationTestable {
 	public enum Browser{IE, FF}
-	enum Font{System, Nanum}
+	public enum Font{System, Nanum}
 	static private Browser browser = Browser.IE;
 	static private Font font = Font.System;
 	private List<TestCase> testcases;
@@ -186,7 +186,7 @@ public class RegressionTest implements AutomationTestable {
 		HtmlReporter.getInstance().setTotalTCSize(testcases.size());
 	}
 	
-	public void run() {
+	public String run() {
 		HtmlReporter.setPath(getTargetFolder()+"report.html");
 		SeleniumServer sserver;
 		try {
@@ -206,6 +206,7 @@ public class RegressionTest implements AutomationTestable {
 		for(TestCase tc:testcases){
 			new TestCaseRunner().run(tc, selenium);
 		}
+		return getTargetFolder()+"report.html";
 	}
 	
 	public static Browser getBrowser() {
